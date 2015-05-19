@@ -46,6 +46,9 @@ end
 
 
 # 自定义插件
+# ===========
+
+# 调试
 group :development, :test do
   # 方便查错和调试	
   gem "better_errors"
@@ -66,6 +69,12 @@ end
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
 
+# Client浏览器判断
+gem 'browser'
+
+# 权限管理
+gem 'pundit'
+
 # 分页
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
@@ -73,9 +82,10 @@ gem 'bootstrap-will_paginate'
 # 树
 gem 'closure_tree'
 
-# 微信公众号支持
+# 微信公众号和企业号支持
 gem 'weixin_rails_middleware'
 gem 'weixin_authorize'
+gem 'qy_wechat'
 
 # 缓存
 gem 'dalli'

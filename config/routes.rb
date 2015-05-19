@@ -1,4 +1,42 @@
 Rails.application.routes.draw do
+  mount QyWechat::Engine, at: "/"
+  mount WeixinRailsMiddleware::Engine, at: "/"
+
+  # resources :users do
+  #   member do
+  #     get :followers, :orders, :rewards
+  #   end
+  # end
+
+  # resources :organizations do
+  #   resources :products, shallow: true
+  #   member do
+  #     get :aviliible_invite_codes, :angels, :partners, :members, :vips
+  #   end  
+  # end
+
+  # resources :sessions,        only: [:new, :create, :destroy]
+  # resources :relationships,   only: [:create, :destroy]
+  # resources :products
+  # resources :store
+  # resources :carts
+  # resources :line_items
+  # resources :orders
+  # resources :rewards
+
+  # root to: 'static_pages#home'
+  
+  # match '/signup',  to: 'users#new',            via: 'get'
+  # match '/signin',  to: 'sessions#new',         via: 'get'
+  # match '/signout', to: 'sessions#destroy',     via: 'delete'
+  # match '/help',    to: 'static_pages#help',    via: 'get'
+  # match '/about',   to: 'static_pages#about',   via: 'get'
+  # match '/contact', to: 'static_pages#contact', via: 'get'
+  # match '/docs',    to: 'static_pages#docs',    via: 'get'
+
+  
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
