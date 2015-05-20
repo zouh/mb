@@ -28,7 +28,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer    :parent_id
       t.belongs_to :organization, index: true
 
-      # 码客帐号
+      # 码客用户帐号
       t.integer    :meeket_id
 
       t.timestamps null: false

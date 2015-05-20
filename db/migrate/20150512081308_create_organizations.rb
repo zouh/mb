@@ -9,6 +9,9 @@ class CreateOrganizations < ActiveRecord::Migration
       t.integer :period, default: 0
       t.integer :users_count, default: 0
 
+      #码客组织ID
+      t.integer :org_id 
+
       # 微信公众号和企业号支持
       t.string  :initial_id
       t.string  :weixin_secret_key
