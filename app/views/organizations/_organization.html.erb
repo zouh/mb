@@ -1,0 +1,18 @@
+<tr>
+  <td><%= logo_for(organization) %></td>
+  <td><%= link_to organization.name, organization %></td>
+  <td><%= organization.contract %></td>
+  <td><%= organization.org_id %></td>
+  <td><%= organization.initial_id %></td>
+  <td><%= organization.app_id %></td>
+  <td><%= organization.weixin_secret_key %></td>
+  <td><%= weixin_engine.weixin_server_url(organization.weixin_secret_key) %></td>
+  <td><%= organization.weixin_token %></td>
+  <td><%= organization.encoding_aes_key %></td>
+  <td><%= organization.created_at.strftime("%Y-%-m-%-d") %> </td>
+  <td>
+    <%= link_to '查看', organization_path(organization) %><br>
+    <%= link_to '编辑', edit_organization_path(organization) %><br>
+    <%= link_to '删除', organization_path(organization), method: :delete, data: { confirm: '确定删除吗？' } %>
+  </td>
+</tr>

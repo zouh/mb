@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20150513085405) do
     t.integer  "level",                        default: 0
     t.integer  "period",                       default: 0
     t.integer  "users_count",                  default: 0
+    t.integer  "org_id"
     t.string   "initial_id"
     t.string   "weixin_secret_key"
     t.string   "weixin_token"

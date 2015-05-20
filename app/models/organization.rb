@@ -10,7 +10,9 @@ class Organization < ActiveRecord::Base
   belongs_to :updated_by_user, class_name: "User", foreign_key: "updated_by"
 
   validates :name, presence: true, length: { maximum: 50 }, uniqueness: { case_sensitive: false }
+  validates :capacity, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 50000, only_integer: true}
   validates :level, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 6, only_integer: true}
+  validates :encoding_aes_key, length: { maximum: 43 }
   validates :created_by, presence: true
   
 end

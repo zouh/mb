@@ -1,0 +1,26 @@
+<h1>推客群列表</h1>
+
+<%= will_paginate previous_label: '上一页', next_label: '下一页' %>
+<table class="table table-striped">
+  <tr>
+    <th></th>
+    <th>名称</th>
+    <th>合同号</th>
+    <th>码客组织号</th>
+    <th>原始ID</th>
+    <th>AppID(应用ID)</th>
+    <th>URL(服务器地址)</th>
+    <th>Token(令牌)</th>
+    <th>EncodingAESKey(消息加解密密钥)</th>
+    <th>AppSecret(应用密钥)</th>
+    <th>创建时间</th>
+    <th><%= link_to '新增', new_organization_path %></th>
+  </tr>
+  <tbody>
+	  <ul class="organizations">
+	    <%= render @organizations %>
+	  </ul>
+  </tbody>
+</table>
+<%= will_paginate previous_label: '上一页', next_label: '下一页' %>
+<p><%= link_to '新增', new_organization_path %></p>

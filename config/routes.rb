@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  # resources :organizations do
+  resources :organizations #do
   #   resources :products, shallow: true
   #   member do
   #     get :aviliible_invite_codes, :angels, :partners, :members, :vips
