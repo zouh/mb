@@ -59,29 +59,30 @@ end
 def make_organizations
   #创建码客群
   meeket = Organization.create!(
-                                  name: "码帮俱乐部",
+                                  name: "码客会员俱乐部",
                                   logo_url: "http://www.meeket.com/images/common/logo.png", 
                                   initial_id: 'gh_1c185bc54b3f',
                                   weixin_secret_key: 'b41c825fdf3dd3e3d51a42a6526b50ff',
                                   weixin_token: 'c9d856b5469fc63afa007f31',
                                   app_id: 'wxcc4c37da7948edc4',
                                   encoding_aes_key: 'fXjEvuDa2dMdiV8NcLGTo0m5RrWQ88SUe1msBUBBqBM',
+                                  org_id: 1,
                                   created_by: 1,
                                   updated_by: 1
                                 )
 
   test = Organization.create!(
-                                  name: "今日工程机械",
+                                  name: "今日工程机械财富帮",
                                   logo_url: "http://www.cmtoday.cn/statics/images/top_logo.png", 
                                   initial_id: 'gh_23184a4f0892',
                                   weixin_secret_key: '0601b8947c0cac7d1680bb40b674a9c4',
                                   weixin_token: 'c9d856b5469fc63afa007f31',
                                   app_id: 'wx93312b406088cd15',
                                   encoding_aes_key: 'fXjEvuDa2dMdiV8NcLGTo0m5RrWQ88SUe1msBUBBqBM',
+                                  org_id: 1,
                                   created_by: 1,
                                   updated_by: 1
                                 )
-  # create_weixin_diymenu_for meeket
 
   # # 创建码客群管理员
   # master = User.find(2)
@@ -89,20 +90,4 @@ def make_organizations
   # mb.update!(user_id: master.id, name: master.name, role: 2)
 end
 
-# def create_weixin_diymenu_for (organization) 
-#   key = 'organizations/' + organization.id.to_s + '/products'
-#   menu_products = organization.diymenus.create!(
-#                                                   name:       '立即购买',
-#                                                   url:        'http://wtk.meeket.com/' + key,
-#                                                   is_show:    true,
-#                                                   sort:       0
-#                                                 )
-#   key = 'my_qrcode'
-#   menu_qrcode = organization.diymenus.create!(
-#                                                 name:       '我的二维码',
-#                                                 key:        key,
-#                                                 is_show:    true,
-#                                                 sort:       1
-#                                               )
-#   organization.generate_weixin_menu
-# end
+

@@ -11,23 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150513085405) do
+ActiveRecord::Schema.define(version: 20150512100737) do
 
   create_table "diymenus", force: :cascade do |t|
-    t.integer  "public_account_id"
+    t.integer  "organization_id"
     t.integer  "parent_id"
     t.string   "name"
     t.string   "key"
     t.string   "url"
     t.boolean  "is_show"
     t.integer  "sort"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "diymenus", ["key"], name: "index_diymenus_on_key"
+  add_index "diymenus", ["organization_id"], name: "index_diymenus_on_organization_id"
   add_index "diymenus", ["parent_id"], name: "index_diymenus_on_parent_id"
-  add_index "diymenus", ["public_account_id"], name: "index_diymenus_on_public_account_id"
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"

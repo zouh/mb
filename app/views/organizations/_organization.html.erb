@@ -5,8 +5,8 @@
   <td><%= organization.org_id %></td>
   <td><%= organization.initial_id %></td>
   <td><%= organization.app_id %></td>
-  <td><%= organization.weixin_secret_key %></td>
   <td><%= weixin_engine.weixin_server_url(organization.weixin_secret_key) %></td>
+  <td><%= organization.weixin_secret_key %></td>
   <td><%= organization.weixin_token %></td>
   <td><%= organization.encoding_aes_key %></td>
   <td><%= organization.created_at.strftime("%Y-%-m-%-d") %> </td>

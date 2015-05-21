@@ -70,11 +70,20 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 关注公众账号
     def handle_subscribe_event
+      openid = @weixin_message.FromUserName
+      to_user = @weixin_message.ToUserName
+      org = Organization.find_by! initial_id: to_user
+      weixin_client = WeixinAuthorize::Client.new(org.app_id, org.weixin_secret_key)
+      if weixin_client.is_valid?  
+        user_info = weixin_client.user(openid)
+      end 
+      nickname = user_info.result[:nickname] #unless user_info.nil?
       if @keyword.present?
         # 扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送
-        return reply_text_message("扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送, keyword: #{@keyword}")
+        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{nickname})未关注#{to_user}时，进行关注后的事件推送, keyword: #{@keyword}")
       end
       reply_text_message("关注公众账号")
+
     end
 
     # 取消关注
@@ -96,6 +105,7 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 点击菜单拉取消息时的事件推送
     def handle_click_event
+
       reply_text_message("你点击了: #{@keyword}")
     end
 
