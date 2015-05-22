@@ -119,9 +119,9 @@ WeixinRailsMiddleware::WeixinController.class_eval do
       # user = 1.to_s
       # a = @keyword
       url ＝ 'https://weituike.herokuapp.com/users/#{user}/qrcode'
-      redirect_to url
-      reply_text_message("你点击了: #{@keyword}, #{request.original_url}, #{request.host}, #{request.url}, #{request.original_fullpath} ")
 
+      reply_text_message("你点击了: #{@keyword}, #{request.host}, #{url} ")
+      redirect_to url
       #redirect_to '/users/1/qrcode'
     end
 
