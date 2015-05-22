@@ -74,10 +74,10 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
       if @keyword.present?
         # 扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送
-        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{suer.subscribe}, #{suer.openid},#{suer.nickname},#{suer.sex},
-                                  #{suer.language},#{suer.city},#{suer.province},#{suer.country},
-                                  #{suer.headimgurl},#{suer.subscribe_time},#{suer.unionid},#{suer.qrcode_url},
-                                  #{suer.parent_id},#{suer.organization_id})
+        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{user.subscribe}, #{user.openid},#{user.nickname},#{user.sex},
+                                  #{user.language},#{user.city},#{user.province},#{user.country},
+                                  #{user.headimgurl},#{user.subscribe_time},#{user.unionid},#{user.qrcode_url},
+                                  #{user.parent_id},#{user.organization_id})
                                   未关注#{@weixin_message.ToUserName}时，进行关注后的事件推送, keyword: #{@keyword}")
       end
       reply_text_message("关注公众账号")
@@ -91,7 +91,17 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 扫描带参数二维码事件: 2. 用户已关注时的事件推送
     def handle_scan_event
-      reply_text_message("扫描带参数二维码事件: 2. 用户已关注时的事件推送, keyword: #{@keyword}")
+      user = get_user
+
+      if @keyword.present?
+        # 扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送
+        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{user.subscribe}, #{user.openid},#{user.nickname},#{user.sex},
+                                  #{user.language},#{user.city},#{user.province},#{user.country},
+                                  #{user.headimgurl},#{user.subscribe_time},#{user.unionid},#{user.qrcode_url},
+                                  #{user.parent_id},#{user.organization_id})
+                                  未关注#{@weixin_message.ToUserName}时，进行关注后的事件推送, keyword: #{@keyword}")
+      end
+      reply_text_message("扫描带参数二维码事件: 2. 用户已关注时的事件推送1, keyword: #{@keyword}")
     end
 
     def handle_location_event # 上报地理位置事件
@@ -103,8 +113,14 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 点击菜单拉取消息时的事件推送
     def handle_click_event
+      # #u = get_user
+      # byebug
+      # a=request.original_url
+      # user = 1.to_s
+      # a = @keyword
+      reply_text_message("你点击了: #{@keyword}, #{request.original_url}, #{request.host}, #{request.url}, #{request.original_fullpath} ")
 
-      reply_text_message("你点击了: #{@keyword}")
+      #redirect_to '/users/1/qrcode'
     end
 
     # 点击菜单跳转链接时的事件推送
@@ -136,32 +152,37 @@ WeixinRailsMiddleware::WeixinController.class_eval do
     end
 
     def get_user
-      openid = @weixin_message.FromUserName
-      org = Organization.find_by! initial_id: @weixin_message.ToUserName
-      weixin_client = WeixinAuthorize::Client.new(org.app_id, org.weixin_secret_key)
-      if weixin_client.is_valid?  
-        user_info = weixin_client.user(openid)
-      end
-      user = User.find_by openid: openid
+      user = User.find_by openid: @weixin_message.FromUserName
       if user.nil?
+        org = Organization.find_by! initial_id: @weixin_message.ToUserName
+        weixin_client = WeixinAuthorize::Client.new(org.app_id, org.weixin_secret_key)
+        if weixin_client.is_valid?  
+          user_info_handler = weixin_client.user @weixin_message.FromUserName
+          if user_info_handler.is_ok? # 或者 ok?
+            user_info = user_info_handler.result # 这个方法直接返回微信的的json结果
+          else
+            # 输出错误信息, 具体格式: "#{code}: #{en_msg}(#{cn_msg})."
+            puts user_info_handler.full_error_messages # 或者 errors 
+          end
+        end
         user = User.create!(
-                            subscribe: user_info.result[:subscribe],
-                            openid: user_info.result[:openid],
-                            nickname: user_info.result[:nickname],
-                            sex: user_info.result[:sex],
-                            language: user_info.result[:language],
-                            city: user_info.result[:city],
-                            province: user_info.result[:province],
-                            country: user_info.result[:country],
-                            headimgurl: user_info.result[:headimgurl],
-                            language: user_info.result[:language],
-                            subscribe_time: user_info.result[:subscribe_time],
-                            unionid: user_info.result[:unionid],
-                            name: user_info.result[:nickname],
+                            subscribe: user_info[:subscribe],
+                            openid: user_info[:openid],
+                            nickname: user_info[:nickname],
+                            sex: user_info[:sex],
+                            language: user_info[:language],
+                            city: user_info[:city],
+                            province: user_info[:province],
+                            country: user_info[:country],
+                            headimgurl: user_info[:headimgurl],
+                            subscribe_time: user_info[:subscribe_time],
+                            unionid: user_info[:unionid],
+                            name: user_info[:nickname],
                             parent_id: @keyword.to_i,
                             organization_id: org.id
                           )
       end
+      return user
     end
 
 end

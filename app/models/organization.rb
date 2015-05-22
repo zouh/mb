@@ -24,17 +24,17 @@ class Organization < ActiveRecord::Base
       host = 'https://weituike.herokuapp.com'
 
       key = host + "/organizations/#{id.to_s}/activities"
-      menu0 = diymenus.create!(name: '推广活动', url: key, is_show: true, sort: 0)
+      menu0 = diymenus.create!(name: '选择活动', url: key, is_show: true, sort: 0)
       key = 'members'
-      menu10 = diymenus.create!(name: '码客会员', key: key, is_show: true, sort: 10)
+      menu10 = diymenus.create!(name: '会员中心', key: key, is_show: true, sort: 10)
       key = 'http://fy.meeket.com/flyer/5004/21571.html'
       menu11 = diymenus.create!(name: '什么是码客会员', parent_id: menu10.id, url: key, is_show: true, sort: 11)    
       key = host + '/signup'
-      menu12 = diymenus.create!(name: '成为码客会员', parent_id: menu10.id, key: key, is_show: true, sort: 12)
+      menu12 = diymenus.create!(name: '成为会员', parent_id: menu10.id, key: key, is_show: true, sort: 12)
       key = host + '/users/#{user}/activities'
       menu13 = diymenus.create!(name: '我的推广', parent_id: menu10.id, key: key, is_show: true, sort: 13)
       key = host + '/users/#{user}/rewards'
-      menu14 = diymenus.create!(name: '我的奖励', parent_id: menu10.id, key: key, is_show: true, sort: 14)
+      menu14 = diymenus.create!(name: '我的积分', parent_id: menu10.id, key: key, is_show: true, sort: 14)
       key = host + '/users/#{user}/qrcode'
       menu15 = diymenus.create!(name: '我的二维码', parent_id: menu10.id, key: key, is_show: true, sort: 15)
       key = 'advertisers'

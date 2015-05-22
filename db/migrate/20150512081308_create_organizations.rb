@@ -28,11 +28,10 @@ class CreateOrganizations < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :organizations, :name, unique: true
     add_index :organizations, :initial_id
-    # add_index :organizations, :weixin_secret_key
-    # add_index :organizations, :weixin_token  
-    # add_index :organizations, :qy_secret_key
-    # add_index :organizations, :qy_token 
+    add_index :organizations, :weixin_secret_key, unique: true
+    add_index :organizations, :weixin_token  
+    add_index :organizations, :qy_secret_key
+    add_index :organizations, :qy_token 
   end
 end

@@ -49,7 +49,7 @@ end
 # 调试
 group :development, :test do
   # 方便查错和调试	
-  gem "better_errors"
+  gem 'better_errors'
 
 end
 
@@ -86,7 +86,7 @@ gem 'weixin_authorize'
 gem 'qy_wechat'
 
 # 缓存
-gem 'dalli'
+gem 'redis-namespace'
 
 # 按时间查询
 gem 'by_star'

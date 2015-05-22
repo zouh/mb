@@ -2,11 +2,11 @@ Rails.application.routes.draw do
   mount QyWechat::Engine, at: "/"
   mount WeixinRailsMiddleware::Engine, at: "/"
 
-  # resources :users do
-  #   member do
-  #     get :followers, :orders, :rewards
-  #   end
-  # end
+  resources :users do
+    member do
+      get :activities, :qrcode, :rewards
+    end
+  end
 
   resources :organizations #do
   #   resources :products, shallow: true
