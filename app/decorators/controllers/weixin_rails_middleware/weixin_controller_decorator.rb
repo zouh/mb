@@ -70,17 +70,15 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 关注公众账号
     def handle_subscribe_event
-      openid = @weixin_message.FromUserName
-      to_user = @weixin_message.ToUserName
-      org = Organization.find_by! initial_id: to_user
-      weixin_client = WeixinAuthorize::Client.new(org.app_id, org.weixin_secret_key)
-      if weixin_client.is_valid?  
-        user_info = weixin_client.user(openid)
-      end 
-      nickname = user_info.result[:nickname] #unless user_info.nil?
+      user = get_user
+
       if @keyword.present?
         # 扫描带参数二维码事件: 1. 用户未关注时，进行关注后的事件推送
-        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{nickname})未关注#{to_user}时，进行关注后的事件推送, keyword: #{@keyword}")
+        return reply_text_message("扫描带参数二维码事件: 1. 用户(#{suer.subscribe}, #{suer.openid},#{suer.nickname},#{suer.sex},
+                                  #{suer.language},#{suer.city},#{suer.province},#{suer.country},
+                                  #{suer.headimgurl},#{suer.subscribe_time},#{suer.unionid},#{suer.qrcode_url},
+                                  #{suer.parent_id},#{suer.organization_id})
+                                  未关注#{@weixin_message.ToUserName}时，进行关注后的事件推送, keyword: #{@keyword}")
       end
       reply_text_message("关注公众账号")
 
@@ -135,6 +133,35 @@ WeixinRailsMiddleware::WeixinController.class_eval do
     # </xml>
     def handle_masssendjobfinish_event
       Rails.logger.info("回调事件处理")
+    end
+
+    def get_user
+      openid = @weixin_message.FromUserName
+      org = Organization.find_by! initial_id: @weixin_message.ToUserName
+      weixin_client = WeixinAuthorize::Client.new(org.app_id, org.weixin_secret_key)
+      if weixin_client.is_valid?  
+        user_info = weixin_client.user(openid)
+      end
+      user = User.find_by openid: openid
+      if user.nil?
+        user = User.create!(
+                            subscribe: user_info.result[:subscribe],
+                            openid: user_info.result[:openid],
+                            nickname: user_info.result[:nickname],
+                            sex: user_info.result[:sex],
+                            language: user_info.result[:language],
+                            city: user_info.result[:city],
+                            province: user_info.result[:province],
+                            country: user_info.result[:country],
+                            headimgurl: user_info.result[:headimgurl],
+                            language: user_info.result[:language],
+                            subscribe_time: user_info.result[:subscribe_time],
+                            unionid: user_info.result[:unionid],
+                            name: user_info.result[:nickname],
+                            parent_id: @keyword.to_i,
+                            organization_id: org.id
+                          )
+      end
     end
 
 end

@@ -25,7 +25,7 @@ class CreateUsers < ActiveRecord::Migration
       t.boolean    :admin, default: false
       t.integer    :role, default: 0
       t.string     :qrcode_url
-      t.integer    :parent_id
+      t.integer    :parent_id, default: 1
       t.belongs_to :organization, index: true
 
       # 码客用户帐号

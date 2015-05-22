@@ -15,6 +15,7 @@ def make_users
                 phone: '18910888104',
                 role: 'admin',
                 admin: true,
+                parent_id: 0,
                 organization_id: 1
               )
   # # 码客群管理员
