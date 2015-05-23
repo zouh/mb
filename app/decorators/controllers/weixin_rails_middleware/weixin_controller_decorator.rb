@@ -113,21 +113,13 @@ WeixinRailsMiddleware::WeixinController.class_eval do
 
     # 点击菜单拉取消息时的事件推送
     def handle_click_event
-      # #u = get_user
-      # byebug
-      # a=request.original_url
-      # user = 1.to_s
-      # a = @keyword
-      url ＝ 'https://weituike.herokuapp.com/users/#{user}/qrcode'
-
       reply_text_message("你点击了: #{@keyword}, #{request.host}, #{url} ")
-      redirect_to url
-      #redirect_to '/users/1/qrcode'
     end
 
     # 点击菜单跳转链接时的事件推送
     def handle_view_event
-      Rails.logger.info("你点击了: #{@keyword}")
+      @user = User.find_by openid: @weixin_message.FromUserName
+      # Rails.logger.info("你点击了: #{@keyword}")
     end
 
     # 帮助文档: https://github.com/lanrion/weixin_authorize/issues/22

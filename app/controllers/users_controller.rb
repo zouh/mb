@@ -3,7 +3,7 @@
   # before_action :signed_in_user,  only: [ :index, :edit, :update, :destroy, :qrcode, :rewards ]
   # before_action :correct_user,    only: [ :edit, :update ]
   # before_action :admin_user,      only: :destroy
-  before_action :set_user,        only: [ :show, :edit, :update, :destroy, :qrcode, :rewards ]
+  before_action :set_user,        only: [ :show, :edit, :update, :destroy, :rewards ]
 
   def new
   	@user = User.new
@@ -49,7 +49,8 @@
   end
 
   def qrcode
-    render 'qrcode'
+    # render 'qrcode'
+    redirect_to 'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGl7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xLzZVZ2RkZXZsVHNjM2FDbjl4R1J6AAIEHwk3VQMEAAAAAA=='
   end
   
   # def rewards
