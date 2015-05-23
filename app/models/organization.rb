@@ -35,8 +35,8 @@ class Organization < ActiveRecord::Base
       menu13 = diymenus.create!(name: '我的推广', parent_id: menu10.id, key: key, is_show: true, sort: 13)
       key = host + '/users/#{user}/rewards'
       menu14 = diymenus.create!(name: '我的积分', parent_id: menu10.id, key: key, is_show: true, sort: 14)
-      key = host + '/users/#{user}/qrcode'
-      menu15 = diymenus.create!(name: '我的二维码', parent_id: menu10.id, key: key, is_show: true, sort: 15)
+      key = host + '/qrcode'
+      menu15 = diymenus.create!(name: '我的二维码', parent_id: menu10.id, url: key, is_show: true, sort: 15)
       key = 'advertisers'
       menu20 = diymenus.create!(name: '联盟推广', key: key, is_show: true, sort: 20)
       key = 'http://www.meeket.com/pingtai_fuwu.htm'

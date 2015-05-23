@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       get :activities, :qrcode, :rewards
     end
   end
+  get 'qrcode', to: 'users#qrcode'
 
   resources :organizations #do
   #   resources :products, shallow: true
